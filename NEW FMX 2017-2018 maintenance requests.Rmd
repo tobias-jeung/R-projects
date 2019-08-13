@@ -1,0 +1,175 @@
+---
+title: "NEW FMX 2017-2018 maintenance requests"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+
+```{r}
+"This is an analysis on the Facilities Management Express system maintenance requests entries from 2017-2018. The maintenance requests consisted of a name, hours worked, cost, and the building on which it was operated among other variables."
+
+```
+
+```{r}
+
+library(readxl)
+lifemoves_29355_maintenance_requests <- read_excel("C:/Users/Owner/Documents/R project files LifeMoves/lifemoves (29355) - maintenance requests.xlsx")
+View(lifemoves_29355_maintenance_requests)
+```
+
+```{r}
+`lifemoves.(29355)...maintenance.requests.(1)` <- read.csv("~/R project files LifeMoves/lifemoves (29355) - maintenance requests (1).csv", header=FALSE, comment.char="#")
+```
+
+
+
+
+```{r}
+lifemoves_29355_maintenance_requests$`Total cost ($)` <- as.numeric(as.factor(lifemoves_29355_maintenance_requests$`Total cost ($)`))
+
+`lifemoves.(29355)...maintenance.requests.(1)`$V302 <- as.numeric(as.character(`lifemoves.(29355)...maintenance.requests.(1)`$V302))
+```
+
+
+
+
+```{r}
+# statistics on total hours
+mean(`lifemoves.(29355)...maintenance.requests.(1)`$V302)
+summary(`lifemoves.(29355)...maintenance.requests.(1)`$V302)
+
+# standard deviation and variance for Total Hours
+sd(as.numeric(`lifemoves.(29355)...maintenance.requests.(1)`$V302),na.rm=TRUE)
+var(as.numeric(`lifemoves.(29355)...maintenance.requests.(1)`$V302),na.rm=TRUE)
+
+```
+
+```{r}
+# histogram of total hours
+library(ggplot2)
+ggplot(`lifemoves.(29355)...maintenance.requests.(1)`, aes(x=V302)) + geom_histogram()
+
+
+```
+
+
+```{r}
+# histogram zoomed in
+
+qplot(`lifemoves.(29355)...maintenance.requests.(1)`$V302,
+      geom="histogram",
+      binwidth=1,
+      xlim= c(0,45))
+     
+```
+
+
+
+```{r}
+# statistics of cost
+
+summary(lifemoves_29355_maintenance_requests$`Total cost ($)`)
+
+# standard deviation and variance for Cost
+sd(as.numeric(lifemoves_29355_maintenance_requests$`Total cost ($)`),na.rm=TRUE)
+var(as.numeric(lifemoves_29355_maintenance_requests$`Total cost ($)`),na.rm=TRUE)
+```
+
+
+```{r}
+# histogram of cost
+library(ggplot2)
+ggplot(lifemoves_29355_maintenance_requests, aes(x=`Total cost ($)`)) + geom_histogram()
+
+
+```
+
+```{r}
+# histogram zoomed in
+
+qplot(lifemoves_29355_maintenance_requests$`Total cost ($)`,
+      geom="histogram",
+      binwidth=1,
+      ylim= c(0,50),
+      xlim= c(0,500))
+     
+```
+
+
+```{r}
+# regression of cost and building
+summary(lm(`Total cost ($)` ~ Building, data = lifemoves_29355_maintenance_requests))
+```
+
+
+
+
+
+```{r}
+# regression of hours and building
+summary(lm(V302 ~ V5, data = `lifemoves.(29355)...maintenance.requests.(1)`))
+```
+
+
+
+```{r}
+# graph of cost and building
+ggplot(lifemoves_29355_maintenance_requests, mapping = aes(x= `Total cost ($)`, y= Building)) + geom_point() 
+
+
+```
+
+```{r}
+# graph of hours and building
+ggplot(`lifemoves.(29355)...maintenance.requests.(1)`, mapping = aes(x= V302, y= V5)) + geom_point()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
