@@ -1,0 +1,136 @@
+---
+title: "FMX 2018-2019 maintenance requests"
+output: html_document
+---
+
+
+```{r}
+"This is an analysis on the Facilities Management Express system maintenance requests entries from 2018-2019. The maintenance requests consisted of a name, hours worked, cost, and the building on which it was operated among other variables."
+
+```
+
+
+
+
+```{r}
+library(readxl)
+X2018_2019_maintenance <- read_excel("C:/Users/Owner/Documents/R project files LifeMoves/2018-2019 maintenance.xlsx")
+
+View(X2018_2019_maintenance)
+```
+
+```{r}
+getwd()
+
+```
+
+```{r}
+X2018_2019_maintenance$`Total cost ($)` <- as.numeric(as.factor(X2018_2019_maintenance$`Total cost ($)`))
+
+X2018_2019_maintenance$`Total hours` <- as.numeric(as.character(X2018_2019_maintenance$`Total hours`))
+```
+
+
+```{r}
+# statistics on total hours
+mean(X2018_2019_maintenance$`Total hours`)
+summary(X2018_2019_maintenance$`Total hours`)
+
+# standard deviation and variance for Total Hours
+sd(as.numeric(X2018_2019_maintenance$`Total hours`),na.rm=TRUE)
+var(as.numeric(X2018_2019_maintenance$`Total hours`),na.rm=TRUE)
+
+```
+
+```{r}
+# histogram of total hours
+library(ggplot2)
+ggplot(X2018_2019_maintenance, aes(x=`Total hours`)) + geom_histogram(bindwidth= 5)
+
+
+```
+
+
+```{r}
+# histogram zoomed in
+
+qplot(X2018_2019_maintenance$`Total hours`,
+      geom="histogram",
+      binwidth=1,
+      xlim= c(0,45))
+     
+```
+
+
+```{r}
+# statistics of cost
+
+summary(X2018_2019_maintenance$`Total cost ($)`)
+
+# standard deviation and variance for Cost
+sd(as.numeric(X2018_2019_maintenance$`Total cost ($)`),na.rm=TRUE)
+var(as.numeric(X2018_2019_maintenance$`Total cost ($)`),na.rm=TRUE)
+```
+
+
+```{r}
+# histogram of cost
+library(ggplot2)
+ggplot(X2018_2019_maintenance, aes(x=`Total cost ($)`)) + geom_histogram()
+
+
+```
+
+```{r}
+# histogram zoomed in
+
+qplot(X2018_2019_maintenance$`Total cost ($)`,
+      geom="histogram",
+      binwidth=1,
+      ylim= c(0,50),
+      xlim= c(0,500))
+     
+```
+
+```{r}
+# graph of cost and building
+ggplot(X2018_2019_maintenance, mapping = aes(x= `Total cost ($)`, y= Building)) + geom_point() 
+
+
+```
+
+```{r}
+# graph of hours and building
+ggplot(X2018_2019_maintenance, mapping = aes(x= `Total hours`, y= Building)) + geom_point()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
